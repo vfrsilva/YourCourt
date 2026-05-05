@@ -1,6 +1,6 @@
 import type { Bbox } from "@/types/court";
 
-export const MAX_BBOX_AREA_DEG = 0.5;
+export const MAX_BBOX_AREA_DEG = 2;
 
 export function bboxArea(bbox: Bbox): number {
   return (bbox.north - bbox.south) * (bbox.east - bbox.west);
