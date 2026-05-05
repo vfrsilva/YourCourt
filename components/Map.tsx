@@ -26,6 +26,7 @@ type Props = {
   center: Coordinates | null;
   localCourts: LocalCourt[];
   focusCoords: Coordinates | null;
+  searchTrigger?: number;
   onCountChange?: (count: number) => void;
   onError?: (message: string | null) => void;
   onDeleteLocal?: (id: string) => void;
@@ -65,10 +66,28 @@ function FocusController({ target }: { target: Coordinates | null }) {
   return null;
 }
 
+function SearchTrigger({
+  trigger,
+  onSearch,
+}: {
+  trigger: number;
+  onSearch: (bounds: LatLngBounds) => void;
+}) {
+  const map = useMap();
+  const last = useRef(trigger);
+  useEffect(() => {
+    if (trigger === last.current) return;
+    last.current = trigger;
+    onSearch(map.getBounds());
+  }, [trigger, map, onSearch]);
+  return null;
+}
+
 export default function Map({
   center,
   localCourts,
   focusCoords,
+  searchTrigger = 0,
   onCountChange,
   onError,
   onDeleteLocal,
@@ -141,6 +160,7 @@ export default function Map({
       />
       <BoundsListener onIdle={handleIdle} />
       <FocusController target={focusCoords} />
+      <SearchTrigger trigger={searchTrigger} onSearch={handleIdle} />
       {markers}
     </MapContainer>
   );
