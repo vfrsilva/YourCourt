@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Header } from "./Header";
 import { LocationGate } from "./LocationGate";
 import { AddCourtDialog } from "./AddCourtDialog";
+import { ServiceWorkerRegistration } from "./ServiceWorkerRegistration";
 import {
   deleteLocalCourt,
   readLocalCourts,
@@ -45,6 +46,7 @@ export function AppShell() {
 
   return (
     <main className="relative h-screen w-screen overflow-hidden">
+      <ServiceWorkerRegistration />
       <LocationGate
         onResolve={(coords) => {
           setCenter(coords);
